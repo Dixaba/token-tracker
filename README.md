@@ -1,5 +1,7 @@
 # token-tracker
 
+## Link to actual site: <https://dixaba.github.io/token-tracker/>
+
 Simple token tracker for League events.
 
 Just open the page, enter start and end dates, the desired amount of tokens to earn and that's it!
