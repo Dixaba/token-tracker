@@ -13,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);
   connect(this, &MainWindow::read,
           this, &MainWindow::doneRead);
+  connect(&tracker, &Tracker::pointsUpdated,
+          this, &MainWindow::updateChart);
   chart = ui->chart->chart();
   tokens = new QLineSeries();
-  tokens->setName("Tokens");
+  dynamic_cast<QAbstractSeries *>(tokens)->setName("Tokens");
   chart->addSeries(dynamic_cast<QAbstractSeries *>(tokens));
   xaxis = new QDateTimeAxis();
   xaxis->setTickCount(5);
@@ -52,5 +54,13 @@ void MainWindow::checkRead()
 void MainWindow::doneRead()
 {
   tracker.setSettings(&s);
+  tracker.load();
   ui->centralwidget->setEnabled(true);
+}
+
+void MainWindow::updateChart(const QVector<QPointF> &newPoints)
+{
+  dynamic_cast<QXYSeries *>(tokens)->replace(newPoints);
+  xaxis->setMin(QDateTime::fromMSecsSinceEpoch(newPoints.constFirst().x()));
+  xaxis->setMax(QDateTime::fromMSecsSinceEpoch(newPoints.constLast().x()));
 }

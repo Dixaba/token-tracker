@@ -25,11 +25,14 @@ class Tracker : public QObject {
     void addLose();
     void setCount(int count);
 
+    int getWinCount();
+    int getLoseCount();
     int getCount();
     int getTargetCount();
     const QVector<QPointF> &getPoints();
 
   signals:
+    void pointsUpdated(const QVector<QPointF> &points);
 
   private:
     QSettings *settings;

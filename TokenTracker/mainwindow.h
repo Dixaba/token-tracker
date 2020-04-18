@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow {
   private slots:
     void checkRead();
     void doneRead();
+    void updateChart(const QVector<QPointF> &newPoints);
 
   private:
     Ui::MainWindow *ui;
