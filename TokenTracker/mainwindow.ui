@@ -14,6 +14,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QChartView" name="chart" native="true"/>

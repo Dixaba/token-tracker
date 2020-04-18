@@ -8,7 +8,7 @@ int counter = 0;
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
-  , ui(new Ui::MainWindow), s("DixabaCorp", "TokenTracker")
+  , ui(new Ui::MainWindow), s("DixabaCorp", "TokenTracker"), tracker()
 {
   ui->setupUi(this);
   connect(this, &MainWindow::read,
@@ -49,4 +49,8 @@ void MainWindow::checkRead()
     }
 }
 
-void MainWindow::doneRead() {}
+void MainWindow::doneRead()
+{
+  tracker.setSettings(&s);
+  ui->centralwidget->setEnabled(true);
+}

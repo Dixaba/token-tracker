@@ -5,6 +5,8 @@
 #include <QSettings>
 #include <QtCharts>
 
+#include "tracker.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -14,8 +16,7 @@ using namespace QtCharts;
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-  public:
-    MainWindow(QWidget *parent = nullptr);
+  public: MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
   signals:
@@ -28,6 +29,8 @@ class MainWindow : public QMainWindow {
   private:
     Ui::MainWindow *ui;
     QSettings s;
+
+    Tracker tracker;
 
     QChart *chart;
     QLineSeries *tokens;
