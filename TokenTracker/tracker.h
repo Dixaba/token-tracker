@@ -29,6 +29,8 @@ class Tracker : public QObject {
     int getLoseCount();
     int getCount();
     int getTargetCount();
+    const QDateTime &getStartDate();
+    const QDateTime &getEndDate();
     const QVector<QPointF> &getPoints();
 
   signals:

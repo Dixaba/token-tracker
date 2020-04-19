@@ -16,7 +16,8 @@ using namespace QtCharts;
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-  public: MainWindow(QWidget *parent = nullptr);
+  public:
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
   signals:
@@ -34,7 +35,7 @@ class MainWindow : public QMainWindow {
     Tracker tracker;
 
     QChart *chart;
-    QLineSeries *tokens;
+    QLineSeries *tokens, *target;
     QDateTimeAxis *xaxis;
     QValueAxis *yaxis;
 };

@@ -81,6 +81,7 @@ void Tracker::startNewTracker(int _targetCount, int _winCount, int _loseCount,
   startDate.setDate(_startDate);
   endDate.setDate(_endDate);
   points.clear();
+  points.append(QPointF(startDate.toMSecsSinceEpoch(), 0));
 }
 
 void Tracker::addWin()
@@ -125,6 +126,16 @@ int Tracker::getCount()
 int Tracker::getTargetCount()
 {
   return targetCount;
+}
+
+const QDateTime &Tracker::getStartDate()
+{
+  return startDate;
+}
+
+const QDateTime &Tracker::getEndDate()
+{
+  return endDate;
 }
 
 const QVector<QPointF> &Tracker::getPoints()
