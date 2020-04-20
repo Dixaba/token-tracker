@@ -20,6 +20,7 @@ class Tracker : public QObject {
 
     void startNewTracker(int _targetCount, int _winCount, int _loseCount,
                          QDate _startDate, QDate _endDate);
+    void setTargetCount(int count);
 
     void addWin();
     void addLose();
@@ -29,9 +30,11 @@ class Tracker : public QObject {
     int getLoseCount();
     int getCount();
     int getTargetCount();
-    const QDateTime &getStartDate();
-    const QDateTime &getEndDate();
-    const QVector<QPointF> &getPoints();
+    QDateTime &getStartDate();
+    QDateTime &getEndDate();
+    QVector<QPointF> &getPoints();
+
+    bool isEventActive();
 
   signals:
     void pointsUpdated(const QVector<QPointF> &points);

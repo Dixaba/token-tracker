@@ -31,15 +31,16 @@ void Tracker::load()
   if (settings == nullptr)
     { return; }
 
-  startDate = settings->value("startDate ").toDateTime();
-  endDate = settings->value("endDate ").toDateTime();
-  targetCount = settings->value("targetCount ").toInt();
+  startDate = settings->value("startDate").toDateTime();
+  endDate = settings->value("endDate").toDateTime();
+  targetCount = settings->value("targetCount").toInt();
   currentCount = settings->value("currentCount").toInt();
   winCount = settings->value("winCount").toInt();
-  loseCount = settings->value("loseCount ").toInt();
+  loseCount = settings->value("loseCount").toInt();
   QByteArray bytes = settings->value("points").toByteArray();
   QDataStream stream(bytes);
   stream >> points;
+  emit pointsUpdated(points);
 }
 
 void Tracker::save()
@@ -78,10 +79,20 @@ void Tracker::startNewTracker(int _targetCount, int _winCount, int _loseCount,
   currentCount = 0;
   winCount = _winCount;
   loseCount = _loseCount;
+  QTime midnight(0, 0);
+  startDate.setTime(midnight);
   startDate.setDate(_startDate);
+  endDate.setTime(midnight);
   endDate.setDate(_endDate);
   points.clear();
   points.append(QPointF(startDate.toMSecsSinceEpoch(), 0));
+  emit pointsUpdated(points);
+}
+
+void Tracker::setTargetCount(int count)
+{
+  targetCount = count;
+  emit pointsUpdated(points);
 }
 
 void Tracker::addWin()
@@ -128,17 +139,22 @@ int Tracker::getTargetCount()
   return targetCount;
 }
 
-const QDateTime &Tracker::getStartDate()
+QDateTime &Tracker::getStartDate()
 {
   return startDate;
 }
 
-const QDateTime &Tracker::getEndDate()
+QDateTime &Tracker::getEndDate()
 {
   return endDate;
 }
 
-const QVector<QPointF> &Tracker::getPoints()
+QVector<QPointF> &Tracker::getPoints()
 {
   return points;
+}
+
+bool Tracker::isEventActive()
+{
+  return targetCount != 0;
 }
