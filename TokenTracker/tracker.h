@@ -36,6 +36,9 @@ class Tracker : public QObject {
 
     bool isEventActive();
 
+    void setLangID(int lang);
+    int getLangID();
+
   signals:
     void pointsUpdated(const QVector<QPointF> &points);
 
@@ -48,6 +51,7 @@ class Tracker : public QObject {
 
     QVector<QPointF> points;
 
+    int langID;
 };
 
 #endif // TRACKER_H

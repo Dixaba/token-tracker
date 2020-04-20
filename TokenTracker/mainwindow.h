@@ -34,8 +34,8 @@ class MainWindow : public QMainWindow {
     void on_buttonLose_clicked();
     void on_buttonNewTarget_clicked();
     void on_buttonStartEvent_clicked();
-
     void on_buttonUpdateStatus_clicked();
+    void on_comboBoxLang_currentIndexChanged(int index);
 
   private:
     Ui::MainWindow *ui;
@@ -51,5 +51,6 @@ class MainWindow : public QMainWindow {
     void resetUIValues();
     void updateLabels();
 
+    QTranslator translator;
 };
 #endif // MAINWINDOW_H

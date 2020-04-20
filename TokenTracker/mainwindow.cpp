@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow), s("DixabaCorp", "TokenTracker"), tracker()
 {
+  QApplication::installTranslator(&translator);
   ui->setupUi(this);
   resetUIValues();
   connect(this, &MainWindow::read,
@@ -19,10 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
           this, &MainWindow::updateChart);
   chart = ui->chart->chart();
   tokens = new QLineSeries();
-  dynamic_cast<QAbstractSeries *>(tokens)->setName(tr("Tokens"));
   chart->addSeries(dynamic_cast<QAbstractSeries *>(tokens));
   target = new QLineSeries();
-  dynamic_cast<QAbstractSeries *>(target)->setName(tr("Target value"));
   chart->addSeries(dynamic_cast<QAbstractSeries *>(target));
   xaxis = new QDateTimeAxis();
   xaxis->setFormat("MM/dd hh:mm");
@@ -39,11 +38,11 @@ MainWindow::MainWindow(QWidget *parent)
   dynamic_cast<QAbstractSeries *>(target)->attachAxis(
     dynamic_cast<QAbstractAxis *>(yaxis));
   QTimer::singleShot(10, this, &MainWindow::checkRead);
+  on_comboBoxLang_currentIndexChanged(-1);
 }
 
 MainWindow::~MainWindow()
 {
-  tracker.save();
   delete ui;
 }
 
@@ -59,6 +58,11 @@ void MainWindow::updateLabels()
   QDateTime startDate = tracker.getStartDate();
   QDateTime endDate = tracker.getEndDate();
   QDateTime now = QDateTime::currentDateTime();
+  ui->spinBoxWin->setValue(winCount);
+  ui->spinBoxLose->setValue(loseCount);
+  ui->spinBoxTarget->setValue(targetCount);
+  ui->dateStart->setDate(startDate.date());
+  ui->dateEnd->setDate(endDate.date());
   int remainingTokens = targetCount - currentCount;
   bool done = remainingTokens <= 0;
   QString rTokens = done
@@ -101,6 +105,7 @@ void MainWindow::doneRead()
 {
   tracker.setSettings(&s);
   tracker.load();
+  ui->comboBoxLang->setCurrentIndex(tracker.getLangID());
   ui->centralwidget->setEnabled(true);
 }
 
@@ -187,4 +192,39 @@ void MainWindow::on_buttonStartEvent_clicked()
 void MainWindow::on_buttonUpdateStatus_clicked()
 {
   updateLabels();
+}
+
+void MainWindow::on_comboBoxLang_currentIndexChanged(int index)
+{
+  QString translation;
+
+  switch (index)
+    {
+      case 0:
+      {
+        // English
+        translation = ":/tr/en";
+        break;
+      }
+
+      case 1:
+      {
+        // Russian
+        translation = ":/tr/ru";
+        break;
+      }
+
+      default:
+      {
+        // English
+        translation = ":/tr/en";
+      }
+    }
+
+  translator.load(translation);
+  ui->retranslateUi(this);
+  updateLabels();
+  dynamic_cast<QAbstractSeries *>(tokens)->setName(tr("Tokens"));
+  dynamic_cast<QAbstractSeries *>(target)->setName(tr("Target value"));
+  tracker.setLangID(index);
 }

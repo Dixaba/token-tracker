@@ -40,6 +40,7 @@ void Tracker::load()
   QByteArray bytes = settings->value("points").toByteArray();
   QDataStream stream(bytes);
   stream >> points;
+  langID = settings->value("lang").toInt();
   emit pointsUpdated(points);
 }
 
@@ -58,6 +59,7 @@ void Tracker::save()
   QDataStream stream(&bytes, QIODevice::WriteOnly);
   stream << points;
   settings->setValue("points", bytes);
+  settings->setValue("lang", langID);
   settings->sync();
 }
 
@@ -86,12 +88,14 @@ void Tracker::startNewTracker(int _targetCount, int _winCount, int _loseCount,
   endDate.setDate(_endDate);
   points.clear();
   points.append(QPointF(startDate.toMSecsSinceEpoch(), 0));
+  save();
   emit pointsUpdated(points);
 }
 
 void Tracker::setTargetCount(int count)
 {
   targetCount = count;
+  save();
   emit pointsUpdated(points);
 }
 
@@ -100,6 +104,7 @@ void Tracker::addWin()
   currentCount += winCount;
   points.append(QPointF(QDateTime::currentDateTime().toMSecsSinceEpoch(),
                         currentCount));
+  save();
   emit pointsUpdated(points);
 }
 
@@ -108,6 +113,7 @@ void Tracker::addLose()
   currentCount += loseCount;
   points.append(QPointF(QDateTime::currentDateTime().toMSecsSinceEpoch(),
                         currentCount));
+  save();
   emit pointsUpdated(points);
 }
 
@@ -116,6 +122,7 @@ void Tracker::setCount(int count)
   currentCount = count;
   points.append(QPointF(QDateTime::currentDateTime().toMSecsSinceEpoch(),
                         currentCount));
+  save();
   emit pointsUpdated(points);
 }
 
@@ -157,4 +164,15 @@ QVector<QPointF> &Tracker::getPoints()
 bool Tracker::isEventActive()
 {
   return targetCount != 0;
+}
+
+void Tracker::setLangID(int lang)
+{
+  langID = lang;
+  save();
+}
+
+int Tracker::getLangID()
+{
+  return langID;
 }
