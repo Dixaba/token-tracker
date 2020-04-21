@@ -83,8 +83,7 @@ void MainWindow::updateLabels()
   ui->labelPlanned->setText(QString::number(plannedTokens));
   int diff = currentCount - plannedTokens;
   ui->labelDifference->setText(QString::number(diff));
-  double gamesPerDay = remainingGames /
-                       std::ceil(now.secsTo(endDate) / (60.0 * 60 * 24));
+  double gamesPerDay = remainingGames / (remainingDays + remainingHours / 24.0);
   ui->labelGamesPerDay->setText(QString::number(gamesPerDay, 'f', 1));
 }
 
@@ -226,5 +225,7 @@ void MainWindow::on_comboBoxLang_currentIndexChanged(int index)
   updateLabels();
   dynamic_cast<QAbstractSeries *>(tokens)->setName(tr("Tokens"));
   dynamic_cast<QAbstractSeries *>(target)->setName(tr("Target value"));
-  tracker.setLangID(index);
+
+  if (index >= 0)
+    { tracker.setLangID(index); }
 }

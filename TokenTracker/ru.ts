@@ -6,7 +6,7 @@
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <source>TokenTracker</source>
-        <translation></translation>
+        <translation>TokenTracker</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="35"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="mainwindow.ui" line="48"/>
         <source>Русский</source>
-        <translation></translation>
+        <translation>Русский</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="58"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="mainwindow.ui" line="159"/>
         <source>End current event and start new!</source>
-        <translation>Завршить текущее событие и начать новое!</translation>
+        <translation>Завершить текущее событие и начать новое!</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="169"/>
@@ -124,22 +124,22 @@
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="22"/>
+        <location filename="mainwindow.cpp" line="226"/>
         <source>Tokens</source>
         <translation>Жетоны</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="25"/>
+        <location filename="mainwindow.cpp" line="227"/>
         <source>Target value</source>
         <translation>Цель</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="65"/>
+        <location filename="mainwindow.cpp" line="69"/>
         <source>You did it!</source>
         <translation>Ура, ты сделал это!</translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="73"/>
+        <location filename="mainwindow.cpp" line="77"/>
         <source>%n day(s)</source>
         <translation>
             <numerusform>%n день</numerusform>
@@ -148,7 +148,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="74"/>
+        <location filename="mainwindow.cpp" line="78"/>
         <source>%n hour(s)</source>
         <translation>
             <numerusform>%n час</numerusform>
