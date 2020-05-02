@@ -51,12 +51,14 @@ void MainWindow::updateLabels()
   if (!tracker.isEventActive())
     { return; }
 
+  // Obtaining data
   int currentCount = tracker.getCount();
   int targetCount = tracker.getTargetCount();
   int winCount = tracker.getWinCount();
   int loseCount = tracker.getLoseCount();
   QDateTime startDate = tracker.getStartDate();
   QDateTime endDate = tracker.getEndDate();
+  // Calculating
   QDateTime now = QDateTime::currentDateTime();
   ui->spinBoxWin->setValue(winCount);
   ui->spinBoxLose->setValue(loseCount);
@@ -64,27 +66,74 @@ void MainWindow::updateLabels()
   ui->dateStart->setDate(startDate.date());
   ui->dateEnd->setDate(endDate.date());
   int remainingTokens = targetCount - currentCount;
+  bool finished = now.secsTo(endDate) <= 0;
   bool done = remainingTokens <= 0;
-  QString rTokens = done
-                    ? tr("You did it!")
-                    : QString::number(remainingTokens);
-  ui->labelRemainingTokens->setText(rTokens);
   int remainingGames = std::ceil(remainingTokens / ((winCount + loseCount) /
                                  2.0));
-  ui->labelRemainingGames->setText(done ? "" : QString::number(remainingGames));
   int remainingDays = now.secsTo(endDate) / (60 * 60 * 24);
   int remainingHours = now.secsTo(endDate) / (60 * 60) % 24;
-  QString days = tr("%n day(s)", nullptr, remainingDays);
-  QString hours = tr("%n hour(s)", nullptr, remainingHours);
-  QString format = QString("%1, %2").arg(days, hours);
-  ui->labelRemainingTime->setText(format);
   double eventProcess = 1.0 * startDate.secsTo(now) / startDate.secsTo(endDate);
   int plannedTokens = targetCount * eventProcess;
-  ui->labelPlanned->setText(QString::number(plannedTokens));
   int diff = currentCount - plannedTokens;
-  ui->labelDifference->setText(QString::number(diff));
   double gamesPerDay = remainingGames / (remainingDays + remainingHours / 24.0);
-  ui->labelGamesPerDay->setText(QString::number(gamesPerDay, 'f', 1));
+  // Creating string output
+  QString rTokens;
+  QString rGames;
+  QString days;
+  QString hours;
+  QString format;
+  QString pTokens;
+  QString dTokens;
+  QString rGamesPerDay;
+
+  if (finished)
+    {
+      rTokens = "";
+      format =  tr("Event ended!") ;
+      pTokens =  "";
+      dTokens = "";
+    }
+  else
+    {
+      rTokens = done ? tr("You did it!") : QString::number(remainingTokens);
+      days = tr("%n day(s)", nullptr, remainingDays);
+      hours = tr("%n hour(s)", nullptr, remainingHours);
+      format = QString("%1, %2").arg(days, hours);
+      pTokens =  QString::number(plannedTokens);
+      dTokens =  QString::number(diff);
+    }
+
+  if (done || finished)
+    {
+      rGames = "";
+      rGamesPerDay =  "";
+    }
+  else
+    {
+      rGames = QString::number(remainingGames);
+      rGamesPerDay = QString::number(gamesPerDay, 'f', 1);
+    }
+
+  // Changing text color
+  QPalette palette = ui->labelDifference->palette();
+  palette.setColor(QPalette::Foreground, diff > 0
+                   ? Qt::darkGreen
+                   : Qt::darkRed);
+  ui->labelDifference->setPalette(palette);
+
+  if (done)
+    {
+      palette.setColor(QPalette::Foreground, Qt::darkGreen);
+      ui->labelRemainingTokens->setPalette(palette);
+    }
+
+  // Updating labels
+  ui->labelRemainingTokens->setText(rTokens);
+  ui->labelRemainingGames->setText(rGames);
+  ui->labelRemainingTime->setText(format);
+  ui->labelPlanned->setText(pTokens);
+  ui->labelDifference->setText(dTokens);
+  ui->labelGamesPerDay->setText(rGamesPerDay);
 }
 
 void MainWindow::checkRead()

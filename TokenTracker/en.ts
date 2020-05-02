@@ -124,22 +124,22 @@
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="226"/>
+        <location filename="mainwindow.cpp" line="244"/>
         <source>Tokens</source>
         <translation>Tokens</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="227"/>
+        <location filename="mainwindow.cpp" line="245"/>
         <source>Target value</source>
         <translation>Target value</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="69"/>
+        <location filename="mainwindow.cpp" line="72"/>
         <source>You did it!</source>
         <translation>You did it!</translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="77"/>
+        <location filename="mainwindow.cpp" line="82"/>
         <source>%n day(s)</source>
         <translation>
             <numerusform>%n day</numerusform>
@@ -147,7 +147,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="78"/>
+        <location filename="mainwindow.cpp" line="83"/>
         <source>%n hour(s)</source>
         <translation>
             <numerusform>%n hour</numerusform>
@@ -155,18 +155,23 @@
         </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="172"/>
-        <location filename="mainwindow.cpp" line="182"/>
+        <location filename="mainwindow.cpp" line="85"/>
+        <source>Event ended!</source>
+        <translation>Event ended!</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="190"/>
+        <location filename="mainwindow.cpp" line="200"/>
         <source>Wrong dates!</source>
         <translation>Wrong dates!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="173"/>
+        <location filename="mainwindow.cpp" line="191"/>
         <source>End date must be at least one day greater than start date!</source>
         <translation>End date must be at least one day greater than start date!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="183"/>
+        <location filename="mainwindow.cpp" line="201"/>
         <source>Event must be active now!</source>
         <translation>Event must be active now!</translation>
     </message>
