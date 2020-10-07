@@ -45,6 +45,7 @@ class MainWindow : public QMainWindow {
 
     QChart *chart;
     QLineSeries *tokens, *target;
+    QScatterSeries *currentProgress;
     QDateTimeAxis *xaxis;
     QValueAxis *yaxis;
 

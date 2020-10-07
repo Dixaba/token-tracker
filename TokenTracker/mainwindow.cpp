@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
   chart->addSeries(dynamic_cast<QAbstractSeries *>(tokens));
   target = new QLineSeries();
   chart->addSeries(dynamic_cast<QAbstractSeries *>(target));
+  currentProgress = new QScatterSeries();
+  chart->addSeries(currentProgress);
+  currentProgress->setMarkerSize(8);
   xaxis = new QDateTimeAxis();
   xaxis->setFormat("MM/dd hh:mm");
   chart->addAxis(dynamic_cast<QAbstractAxis *>(xaxis), Qt::AlignBottom);
@@ -30,12 +33,16 @@ MainWindow::MainWindow(QWidget *parent)
     dynamic_cast<QAbstractAxis *>(xaxis));
   dynamic_cast<QAbstractSeries *>(target)->attachAxis(
     dynamic_cast<QAbstractAxis *>(xaxis));
+  dynamic_cast<QAbstractSeries *>(currentProgress)->attachAxis(
+    dynamic_cast<QAbstractAxis *>(xaxis));
   yaxis = new QValueAxis();
   yaxis->setLabelFormat("%d");
   chart->addAxis(dynamic_cast<QAbstractAxis *>(yaxis), Qt::AlignLeft);
   dynamic_cast<QAbstractSeries *>(tokens)->attachAxis(
     dynamic_cast<QAbstractAxis *>(yaxis));
   dynamic_cast<QAbstractSeries *>(target)->attachAxis(
+    dynamic_cast<QAbstractAxis *>(yaxis));
+  dynamic_cast<QAbstractSeries *>(currentProgress)->attachAxis(
     dynamic_cast<QAbstractAxis *>(yaxis));
   QTimer::singleShot(10, this, &MainWindow::checkRead);
   on_comboBoxLang_currentIndexChanged(-1);
@@ -134,6 +141,9 @@ void MainWindow::updateLabels()
   ui->labelPlanned->setText(pTokens);
   ui->labelDifference->setText(dTokens);
   ui->labelGamesPerDay->setText(rGamesPerDay);
+  // Update point
+  currentProgress->clear();
+  currentProgress->append(now.toMSecsSinceEpoch(), currentCount);
 }
 
 void MainWindow::checkRead()
@@ -274,6 +284,7 @@ void MainWindow::on_comboBoxLang_currentIndexChanged(int index)
   updateLabels();
   dynamic_cast<QAbstractSeries *>(tokens)->setName(tr("Tokens"));
   dynamic_cast<QAbstractSeries *>(target)->setName(tr("Target value"));
+  dynamic_cast<QAbstractSeries *>(currentProgress)->setName(tr("Current"));
 
   if (index >= 0)
     { tracker.setLangID(index); }
