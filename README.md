@@ -1,6 +1,14 @@
 # token-tracker
 
-## Link to actual site: <https://dixaba.github.io/token-tracker/>
+## The project is discontinued
+
+1) Riot updated token gain mechanics, now they are time-based.
+2) C++ WebAssembly with Qt environment is quite tedios to maintain.
+3) I don't like using C++ as much as before.
+
+Sorry for inconvinience
+
+---
 
 Simple token tracker for League events.
 
